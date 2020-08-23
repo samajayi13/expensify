@@ -3,14 +3,15 @@
 sumbitBtn.addEventListener("click", function (e) {
     e.preventDefault();
     let username = document.querySelector("#username").value;
-    $.ajax({
+   $.ajax({
         url: '/Home/SetUserNameCookie',
         data: { username: username },
         type: "POST",
         success: function () {
             alert('Added');
+            window.location.href = '/Home/Homepage';
+
         }
     });
 
-    window.location.href = '/Home/Homepage';
 });

@@ -1,0 +1,14 @@
+﻿@model Expensify.Models.MonthlyExpense
+@{
+    ViewBag.Title = "MonthlyExpenses";
+}
+
+<h2>MonthlyExpenses for the month of @ViewBag.MonthName</h2>
+
+@foreach (var val in Model.Expenses.Values)
+{
+    foreach(var v in val)
+    {
+        <p>@v.Name</p>
+    }
+}
