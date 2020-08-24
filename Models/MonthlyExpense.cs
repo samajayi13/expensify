@@ -40,11 +40,33 @@ namespace Expensify.Models
 
         }
 
+        public void UpdateData(object[] actualAmount, object[] budgetAmount, object[] category,int month,string username)
+        {
+            DbModel1 database = new DbModel1();
+
+            for (int i = 0; i <= actualAmount.Length-1; i++)
+            {
+                int budgetAmountInt = int.Parse(budgetAmount[i].ToString());
+                int actualAmountInt = int.Parse(actualAmount[i].ToString());
+                Expense expense = new Expense(
+                        category[i].ToString(), 
+                        budgetAmountInt,
+                        actualAmountInt,
+                        budgetAmountInt - actualAmountInt
+                    );
+                var singleItem =  database.Expenses.Single(x => x.name == expense.Name && x.month == month && x.username == username);
+                singleItem.actual_amount = expense.Amount;
+                singleItem.budget = expense.BudgetAmount;
+            }
+
+            database.SaveChanges();
+        }
 
         public void GetCurrentData(string passdedUsername, int passedMonth)
         {
             DbModel1 database = new DbModel1();
-
+            month = passedMonth;
+            username = passdedUsername;
             var rows = database.Expenses
                 .Where(u => u.username == passdedUsername).ToList()
                 .Where(m => m.month == passedMonth).ToList();

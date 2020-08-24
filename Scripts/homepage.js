@@ -1,8 +1,8 @@
 ﻿document.addEventListener("click", function (e) {
     e.preventDefault();
-    let number = getMonth();
     if (e.target.id === "btn-monthly-expenses") {
-        window.location.href = `/Home/monthly-expenses/ ${number + 1}`;
+        window.location.href = `/Home/monthly-expenses/8`;
+        console.log("working");
     } else if (e.target.id === "btn-btn-monthly-budge") {
         window.location.href = '/Home/monthly-budget';
 

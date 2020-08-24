@@ -11,6 +11,7 @@ namespace Expensify.Controllers
     public class HomeController : Controller
     {
         private string username;
+        private MonthlyExpense monthlyExpenses = new MonthlyExpense();
         [HttpPost]
         public ActionResult SetUserNameCookie(string username)
         {
@@ -19,6 +20,14 @@ namespace Expensify.Controllers
             Response.Cookies.Add(cookie);
 
             return Json(username,JsonRequestBehavior.AllowGet);
+        }
+        
+        [HttpPost]
+        public ActionResult UpdateData(Object[] actualAmount, Object[] budgetAmount, Object[] category)
+        {
+            monthlyExpenses.UpdateData(actualAmount, budgetAmount, category,8,"samajayi13");
+
+            return Json(actualAmount,JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Index()
@@ -57,14 +66,14 @@ namespace Expensify.Controllers
             return View();
         }
 
-         [Route("home/monthly-expenses")]
+         [Route("home/monthly-expenses/{month}")]
 
         public ActionResult MonthlyExpenses(int month  = 0)
         {
             month = month == 0 ? DateTime.Today.Month : month;
             ViewBag.MonthName = GetMonthName(month);
             ViewBag.Username = "samajayi13";
-            MonthlyExpense monthlyExpenses = new MonthlyExpense();
+            
 
             monthlyExpenses.GetCurrentData("samajayi13", month);
             return View(monthlyExpenses);
@@ -74,7 +83,7 @@ namespace Expensify.Controllers
         {
             string[] months = { "January", "Febuary", "March", "April", "May", "June", "July", "August", "Spetember", "October", "Novemember", "December" };
 
-            return months[number];
+            return months[number-1];
         }
     }
 }
