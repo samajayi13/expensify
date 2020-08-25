@@ -1,5 +1,6 @@
 ﻿using Microsoft.Ajax.Utilities;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
@@ -18,6 +19,8 @@ namespace Expensify.Models
 
         private string username;
         private int month ;
+        private TrendGraphModel trendGraphModel = new TrendGraphModel();
+
 
         public MonthlyExpense()
         {
@@ -52,7 +55,8 @@ namespace Expensify.Models
                         category[i].ToString(), 
                         budgetAmountInt,
                         actualAmountInt,
-                        budgetAmountInt - actualAmountInt
+                        budgetAmountInt - actualAmountInt,
+                        month
                     );
                 var singleItem =  database.Expenses.Single(x => x.name == expense.Name && x.month == month && x.username == username);
                 singleItem.actual_amount = expense.Amount;
@@ -62,14 +66,21 @@ namespace Expensify.Models
             database.SaveChanges();
         }
 
-        public void GetCurrentData(string passdedUsername, int passedMonth)
+        public void GetCurrentData(string passdedUsername, int passedMonth = 0)
         {
             DbModel1 database = new DbModel1();
             month = passedMonth;
             username = passdedUsername;
             var rows = database.Expenses
-                .Where(u => u.username == passdedUsername).ToList()
-                .Where(m => m.month == passedMonth).ToList();
+            .Where(u => u.username == passdedUsername).ToList()
+            .Where(m => m.month == passedMonth).ToList();
+            
+            if(passedMonth == 0)
+            {
+                rows = database.Expenses
+                .Where(u => u.username == passdedUsername).ToList();
+            }
+            
 
             List<Expense> Savings = new List<Expense>();
             List<Expense> PersonalCare = new List<Expense>();
@@ -77,7 +88,7 @@ namespace Expensify.Models
 
             foreach (var r in rows)
             {
-                Expense expense =  new Expense(r.name, r.budget, r.actual_amount,  r.budget - r.actual_amount);
+                Expense expense =  new Expense(r.name, r.budget, r.actual_amount,  r.budget - r.actual_amount,r.month);
 
                 if (r.category == "SAVINGS")
                 {
@@ -98,6 +109,36 @@ namespace Expensify.Models
             Expenses.Add("MISCELLANEOUS", Miscellaneous);
 
             CalculateFinalExpense();
+
+        }
+
+        public TrendGraphModel GetDataForLineGraph(string username)
+        {
+
+            this.GetCurrentData(username);
+
+            this.GetTotalForEachMonth();
+
+            return this.trendGraphModel;
+        }
+
+        private void GetTotalForEachMonth()
+        {
+            int[] actualAmounts = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            int[] budgetAmounts = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+
+            foreach (var item in this.Expenses.Values)
+            {
+                foreach(var obj in item)
+                {
+                    actualAmounts[obj.Month - 1] = actualAmounts[obj.Month - 1] + obj.Amount;
+                    budgetAmounts[obj.Month - 1] = budgetAmounts[obj.Month - 1] + obj.BudgetAmount;
+                }
+            }
+
+            this.trendGraphModel.AcutalAmounts = actualAmounts;
+            this.trendGraphModel.BudgetAmounts = budgetAmounts;
 
         }
     }

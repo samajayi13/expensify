@@ -79,6 +79,21 @@ namespace Expensify.Controllers
             return View(monthlyExpenses);
         }
 
+        [HttpPost]
+        public ActionResult TrendGraphJson()
+        {
+            TrendGraphModel trendGraphModel = new TrendGraphModel();
+            trendGraphModel  = this.monthlyExpenses.GetDataForLineGraph("samajayi13");
+            return Json(trendGraphModel, JsonRequestBehavior.AllowGet);
+
+        } 
+        public ActionResult TrendGraph()
+        {
+            return View();
+
+        }
+
+       
         private string GetMonthName(int number)
         {
             string[] months = { "January", "Febuary", "March", "April", "May", "June", "July", "August", "Spetember", "October", "Novemember", "December" };
