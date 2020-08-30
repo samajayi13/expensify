@@ -12,6 +12,8 @@ namespace Expensify.Controllers
     {
         private string username;
         private MonthlyExpense monthlyExpenses = new MonthlyExpense();
+        private string[] months = { "January", "Febuary", "March", "April", "May", "June", "July", "August", "Spetember", "October", "Novemember", "December" };
+
         [HttpPost]
         public ActionResult SetUserNameCookie(string username)
         {
@@ -96,9 +98,15 @@ namespace Expensify.Controllers
        
         private string GetMonthName(int number)
         {
-            string[] months = { "January", "Febuary", "March", "April", "May", "June", "July", "August", "Spetember", "October", "Novemember", "December" };
 
             return months[number-1];
+        }
+
+        public ActionResult YearlyReport()
+        {
+            YearlyReportModel yearlyReportModel = new YearlyReportModel("samajayi13");
+            ViewBag.months = this.months;
+            return View(yearlyReportModel);
         }
     }
 }

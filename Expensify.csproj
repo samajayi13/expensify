@@ -150,6 +150,7 @@
     <Compile Include="Models\Expense.cs" />
     <Compile Include="Models\MonthlyExpense.cs" />
     <Compile Include="Models\TrendGraphModel.cs" />
+    <Compile Include="Models\YearlyReprotModel.cs" />
     <Compile Include="PERSONAL_CARE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SAVING.cs" />
@@ -204,6 +205,7 @@
     <Content Include="Views\Home\Homepage.cshtml" />
     <Content Include="Views\Home\MonthlyExpenses.cshtml" />
     <Content Include="Views\Home\TrendGraph.cshtml" />
+    <Content Include="Views\Home\YearlyReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,126 @@
+﻿@model  Expensify.Models.YearlyReportModel
+@{
+    ViewBag.Title = "YearlyReport";
+}
+
+
+
+
+<h1 class="text-center" style="color:white;margin-bottom:10vh;text-decoration:underline">Yearly report</h1>
+@{int i = 0;}
+@foreach (var monthlyExpense in Model.monthlyExpenses)
+{
+    <h2 class="text-center" style="color:white">Monthly expenses for the month of @ViewBag.months[i]</h2>
+
+    <div class="monthly-expenses_main" style="margin: 15vh 10vw;">
+        @foreach (var key in monthlyExpense.Expenses.Keys)
+        {
+            <h4 class="table_name">@key</h4>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-edit">
+                                    <thead>
+                                        <tr>
+                                            <th style="display: none;">#</th>
+                                            <th>Category</th>
+                                            <th>Monthly Budget Amount</th>
+                                            <th>Monthly Actual Amount</th>
+                                            <th>Difference</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in monthlyExpense.Expenses[key])
+                                        {
+                                            <tr>
+                                                <th scope="row" style="display: none;">1</th>
+                                                <td class="tabledit-view-mode" style="cursor: pointer;">
+                                                    <span class="tabledit-span category">
+                                                        @item.Name
+                                                    </span><input class="tabledit-input form-control input-sm" type="text" style="display: none;" disabled="">
+                                                </td>
+                                                <td class="tabledit-view-mode" style="cursor: pointer;">
+                                                    <span class="tabledit-span budget-amount" style="">
+                                                        @item.BudgetAmount
+                                                    </span><input class="tabledit-input form-control input-sm fill" type="text" style="display: none;" disabled="">
+                                                </td>
+                                                <td class="tabledit-view-mode">
+                                                    <span class="tabledit-span actual-amount">@item.Amount</span>
+                                                    <input class="tabledit-input form-control input-sm fill" type="text" style="display: none;" disabled="">
+                                                </td>
+
+                                                <td class="tabledit-view-mode">
+                                                    <span class="tabledit-span">@item.Difference</span>
+                                                    <input class="tabledit-input form-control input-sm fill" type="text" style="display: none;" disabled="">
+                                                </td>
+                                            </tr>
+
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+
+        <h4 class="table_name">TOTAL EXPENSES</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-edit">
+                                <thead>
+                                    <tr>
+                                        <th style="display: none;">#</th>
+                                        <th></th>
+                                        <th>Monthly Budget Amount</th>
+                                        <th>Monthly Actual Amount</th>
+                                        <th>Difference</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" style="display: none;">1</th>
+                                        <td class="tabledit-view-mode" style="cursor: pointer;">
+                                            <span class="tabledit-span">
+
+                                            </span><input class="tabledit-input form-control input-sm" type="text" style="display: none;" disabled="">
+                                        </td>
+                                        <td class="tabledit-view-mode" style="cursor: pointer;">
+                                            <span class="tabledit-span" style="">
+                                                @monthlyExpense.FinalExpense.BudgetAmount
+                                            </span><input class="tabledit-input form-control input-sm fill" type="text" style="display: none;" disabled="">
+                                        </td>
+                                        <td class="tabledit-view-mode">
+                                            <span class="tabledit-span">@monthlyExpense.FinalExpense.Amount</span>
+                                            <input class="tabledit-input form-control input-sm fill" type="text" style="display: none;" disabled="">
+                                        </td>
+
+                                        <td class="tabledit-view-mode">
+                                            <span class="tabledit-span">@monthlyExpense.FinalExpense.Difference</span>
+                                            <input class="tabledit-input form-control input-sm fill" type="text" style="display: none;" disabled="">
+                                        </td>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <hr />
+    i += 1;
+}

@@ -17,8 +17,6 @@ namespace Expensify.Models
 
         public Expense FinalExpense { get; set; }
 
-        private string username;
-        private int month ;
         private TrendGraphModel trendGraphModel = new TrendGraphModel();
 
 
@@ -69,8 +67,6 @@ namespace Expensify.Models
         public void GetCurrentData(string passdedUsername, int passedMonth = 0)
         {
             DbModel1 database = new DbModel1();
-            month = passedMonth;
-            username = passdedUsername;
             var rows = database.Expenses
             .Where(u => u.username == passdedUsername).ToList()
             .Where(m => m.month == passedMonth).ToList();
@@ -110,6 +106,11 @@ namespace Expensify.Models
 
             CalculateFinalExpense();
 
+        }
+
+        public void YearlyReport(string username)
+        {
+            
         }
 
         public TrendGraphModel GetDataForLineGraph(string username)

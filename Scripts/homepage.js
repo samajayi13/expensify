@@ -7,7 +7,7 @@
         window.location.href = '/Home/monthly-budget';
 
     } else if (e.target.id === "btn-monthly-trend") {
-        window.location.href = '/Home/monthly-trend';
+        window.location.href = '/Home/trendgraph';
 
     } else if (e.target.id === "btn-recommendations") {
         window.location.href = '/Home/monthly-recommendations';
