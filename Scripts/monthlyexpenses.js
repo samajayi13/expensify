@@ -667,9 +667,7 @@ document.querySelector(".monthly-expenses_btn-update").addEventListener("click",
     updateData();
   
 
-    console.log(actualAmount);
-    console.log(budgetAmount);
-    console.log(category);
+   
     $.ajax({
         url: '/Home/UpdateData',
         data: { category:category,budgetAmount :budgetAmount,actualAmount: actualAmount },
@@ -681,3 +679,4 @@ document.querySelector(".monthly-expenses_btn-update").addEventListener("click",
         }
     });
 })
+

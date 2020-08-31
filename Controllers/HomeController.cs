@@ -108,5 +108,19 @@ namespace Expensify.Controllers
             ViewBag.months = this.months;
             return View(yearlyReportModel);
         }
+
+        [HttpPost]
+        public ActionResult Recommendations(int budgetFigure = 1500 ,int month = 8 )
+        {
+            monthlyExpenses.GetCurrentData("samajayi13", month);
+            RecommendationModel recommendationModel = new RecommendationModel("samajayi13", budgetFigure, this.monthlyExpenses, month);
+
+            return Json(recommendationModel, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult ViewRecommendations()
+        {
+
+            return View();
+        }
     }
 }

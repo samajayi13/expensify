@@ -12,5 +12,7 @@
     } else if (e.target.id === "btn-recommendations") {
         window.location.href = '/Home/monthly-recommendations';
 
-    }
+    } 
+    
 }); 
+
