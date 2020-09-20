@@ -1,4 +1,5 @@
-# expensify
+# Expensify
+Used Bootstrap,HTML,CSS,Javascript,C# and ASP.Net MVC 5 to create a budgeting system that allows the user to keep track of their expenses and set budgeting goals.
 
 [![expensify1-2.png](https://i.postimg.cc/KzbpZNwn/expensify1-2.png)](https://postimg.cc/8Fym4h15)
 
